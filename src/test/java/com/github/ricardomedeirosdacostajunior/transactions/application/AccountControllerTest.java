@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.ArrayMatching.hasItemInArray;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,6 @@ public class AccountControllerTest {
         "requestMappingAnnotation",
         () -> assertThat(requestMappingAnnotation, is(notNullValue())),
         () ->
-            assertThat(requestMappingAnnotation.path(), hasItemInArray("/accounts")),
-        () -> assertThat(requestMappingAnnotation.produces(), hasItemInArray(APPLICATION_JSON_VALUE)));
+            assertThat(requestMappingAnnotation.path(), hasItemInArray("/accounts")));
   }
 }
