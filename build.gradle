@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.3.0.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'com.diffplug.gradle.spotless' version "${spotlessVersion}"
 }
 
 group = 'com.github.ricardomedeirosdacostajunior'
@@ -11,6 +12,19 @@ targetCompatibility = "${javaVersion}"
 
 repositories {
 	mavenCentral()
+}
+
+spotless {
+	java {
+		googleJavaFormat()
+	}
+	format "misc", {
+		target "*gradle", "*md", "*gitignore"
+
+		trimTrailingWhitespace()
+		indentWithTabs()
+		endWithNewline()
+	}
 }
 
 dependencies {
