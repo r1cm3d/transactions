@@ -6,9 +6,9 @@ public class EntityBaseHelper {
 
   static <T> Field getDeclaredField(Class<T> classType, String name) {
     try {
-      return classType.getDeclaredField( name );
+      return classType.getDeclaredField(name);
     } catch (NoSuchFieldException ex) {
-      throw new RuntimeException( ex.getMessage() );
+      throw new RuntimeException(ex.getMessage());
     }
   }
 }
