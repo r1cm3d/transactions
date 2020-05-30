@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import org.junit.jupiter.api.Test;
 
-ublic class BaseEntityTest {
+public class BaseEntityTest {
 
   @Test
   public void entityClassMustBeAnnotatedWithMappedSuperclass() {
