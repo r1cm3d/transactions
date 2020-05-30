@@ -29,12 +29,12 @@ public class BaseEntityTest {
 
   @Test
   public void idMustBeAnnotatedWithColumnAnnotation() {
-    var idColumnAnnotation = getUUUIDField().getAnnotation(Column.class);
+    var uuidColumnAnnotation = getUUUIDField().getAnnotation(Column.class);
 
     assertAll(
-        "idColumnAnnotation",
-        () -> assertThat(idColumnAnnotation, is(notNullValue())),
-        () -> assertThat(idColumnAnnotation.columnDefinition(), is(equalTo(UUID_FIELD))));
+        "uuidColumnAnnotation",
+        () -> assertThat(uuidColumnAnnotation, is(notNullValue())),
+        () -> assertThat(uuidColumnAnnotation.columnDefinition(), is(equalTo(UUID_FIELD))));
   }
 
   private Field getUUUIDField() {
