@@ -36,8 +36,17 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+	testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+	compile group: 'org.eclipse.persistence', name: 'javax.persistence', version: "${javaxPersistenceVersion}"
+
+	testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: "${hamcrestCoreVersion}"
 }
 
 test {
 	useJUnitPlatform()
 }
+
