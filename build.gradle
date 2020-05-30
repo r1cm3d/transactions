@@ -10,6 +10,10 @@ version = "${version}"
 sourceCompatibility = "${javaVersion}"
 targetCompatibility = "${javaVersion}"
 
+apply plugin: 'jacoco'
+apply plugin: 'com.diffplug.gradle.spotless'
+apply plugin: 'io.spring.dependency-management'
+
 repositories {
 	mavenCentral()
 }
