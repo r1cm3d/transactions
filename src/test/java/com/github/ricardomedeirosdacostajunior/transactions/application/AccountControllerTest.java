@@ -1,9 +1,9 @@
 package com.github.ricardomedeirosdacostajunior.transactions.application;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.ArrayMatching.hasItemInArray;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -26,7 +26,7 @@ public class AccountControllerTest {
         "requestMappingAnnotation",
         () -> assertThat(requestMappingAnnotation, is(notNullValue())),
         () ->
-            assertThat(requestMappingAnnotation.path()[0], is(equalTo("/accounts"))),
-        () -> assertThat(requestMappingAnnotation.produces()[0], is(equalTo(APPLICATION_JSON_VALUE))));
+            assertThat(requestMappingAnnotation.path(), hasItemInArray("/accounts")),
+        () -> assertThat(requestMappingAnnotation.produces(), hasItemInArray(APPLICATION_JSON_VALUE)));
   }
 }
