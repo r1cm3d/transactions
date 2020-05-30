@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test;
 
 public class AccountTest {
 
+  private static final String DOCUMENT_NUMBER_COLUMN = "document_number";
+  private static final String DOCUMENT_NUMBER_ATTRIBUTE = "documentNumber";
+
   @Test
   public void accountClassMustBeAnnotatedWithEntityAnnotation() {
     assertThat(Account.class.isAnnotationPresent(Entity.class), is(true));
@@ -21,11 +24,12 @@ public class AccountTest {
   @Test
   public void documentNumberMustBeAnnotatedWithColumnAnnotation() {
     var documentNumberColumnAnnotation =
-        getDeclaredField(Account.class, "documentNumber").getAnnotation(Column.class);
+        getDeclaredField(Account.class, DOCUMENT_NUMBER_ATTRIBUTE).getAnnotation(Column.class);
 
     assertAll(
         "documentNumberColumnAnnotation",
         () -> assertThat(documentNumberColumnAnnotation, is(notNullValue())),
-        () -> assertThat(documentNumberColumnAnnotation.name(), is(equalTo("document_number"))));
+        () ->
+            assertThat(documentNumberColumnAnnotation.name(), is(equalTo(DOCUMENT_NUMBER_COLUMN))));
   }
 }
