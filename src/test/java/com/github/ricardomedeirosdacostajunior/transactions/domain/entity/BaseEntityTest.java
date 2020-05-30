@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 public class BaseEntityTest {
 
+  private static final String UUID_FIELD = "uuid";
+
   @Test
   public void entityClassMustBeAnnotatedWithMappedSuperclass() {
     assertThat(BaseEntity.class.isAnnotationPresent(MappedSuperclass.class), is(true));
@@ -32,10 +34,10 @@ public class BaseEntityTest {
     assertAll(
         "idColumnAnnotation",
         () -> assertThat(idColumnAnnotation, is(notNullValue())),
-        () -> assertThat(idColumnAnnotation.columnDefinition(), is(equalTo("uuid"))));
+        () -> assertThat(idColumnAnnotation.columnDefinition(), is(equalTo(UUID_FIELD))));
   }
 
   private Field getUUUIDField() {
-    return getDeclaredField(BaseEntity.class, "uuid");
+    return getDeclaredField(BaseEntity.class, UUID_FIELD);
   }
 }
