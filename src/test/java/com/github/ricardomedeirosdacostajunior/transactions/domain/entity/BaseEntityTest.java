@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import org.junit.jupiter.api.Test;
 
-public class BaseEntityTest {
+ublic class BaseEntityTest {
 
   @Test
   public void entityClassMustBeAnnotatedWithMappedSuperclass() {
@@ -22,7 +22,7 @@ public class BaseEntityTest {
 
   @Test
   public void idMustBeAnnotatedWithIdAnnotation() {
-    assertThat(getDeclaredField(BaseEntity.class, "uuid").isAnnotationPresent(Id.class), is(true));
+    assertThat(getUUUIDField().isAnnotationPresent(Id.class), is(true));
   }
 
   @Test
