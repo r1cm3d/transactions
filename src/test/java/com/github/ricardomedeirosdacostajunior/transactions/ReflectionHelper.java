@@ -1,10 +1,10 @@
-package com.github.ricardomedeirosdacostajunior.transactions.domain.entity;
+package com.github.ricardomedeirosdacostajunior.transactions;
 
 import java.lang.reflect.Field;
 
-public class EntityBaseHelper {
+public class ReflectionHelper {
 
-  static <T> Field getDeclaredField(Class<T> classType, String name) {
+  public static <T> Field getDeclaredField(Class<T> classType, String name) {
     try {
       return classType.getDeclaredField(name);
     } catch (NoSuchFieldException ex) {

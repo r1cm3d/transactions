@@ -1,6 +1,6 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.entity;
 
-import static com.github.ricardomedeirosdacostajunior.transactions.domain.entity.EntityBaseHelper.getDeclaredField;
+import static com.github.ricardomedeirosdacostajunior.transactions.ReflectionHelper.getDeclaredField;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
