@@ -1,5 +1,6 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.service;
 
+import static java.util.UUID.fromString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.verify;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Account;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.AccountRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -24,6 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class AccountServiceTest {
 
   private static final String DOCUMENT_NUMBER = "12345678900";
+  private static final String UUID = "3554cc7e-ae24-4ab7-b52d-fbfd53644bfe";
 
   @InjectMocks private AccountService accountService;
 
@@ -31,17 +34,34 @@ public class AccountServiceTest {
 
   @Captor private ArgumentCaptor<Account> accountArgumentCaptor;
 
+  private Account account;
+
+
+  @BeforeEach
+  public void setup() {
+    account = Account.builder()
+        .documentNumber(DOCUMENT_NUMBER)
+        .uuid(fromString(UUID))
+        .build();
+  }
+
   @Test
   public void create() {
     var accountDTO = AccountDTO.builder().documentNumber(DOCUMENT_NUMBER).build();
-    doReturn(Account.builder().build()).when(accountRepository).save(any(Account.class));
+    doReturn(account).when(accountRepository).save(any(Account.class));
 
-    accountService.create(accountDTO);
+    var actualAccountDTO = accountService.create(accountDTO);
 
     verify(accountRepository).save(accountArgumentCaptor.capture());
     var accountCaptured = accountArgumentCaptor.getValue();
     assertAll(
+        "accountCaptured",
         () -> assertThat(accountCaptured.getUuid(), is(notNullValue())),
         () -> assertThat(accountCaptured.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
+    assertAll(
+        "accountDTOReturned",
+        () -> assertThat(actualAccountDTO.getUuid(), is(equalTo(fromString(UUID)))),
+        () -> assertThat(accountCaptured.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
+
   }
 }

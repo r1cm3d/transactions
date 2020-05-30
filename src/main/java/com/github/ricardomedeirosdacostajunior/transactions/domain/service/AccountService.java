@@ -11,16 +11,23 @@ public class AccountService {
 
   private AccountRepository accountRepository;
 
-  public void create(@NonNull final AccountDTO accountDTO) {
+  public AccountDTO create(@NonNull final AccountDTO accountDTO) {
     var account = dtoToEntity(accountDTO);
 
-    accountRepository.save(account);
+    return entityToDto(accountRepository.save(account));
   }
 
   private Account dtoToEntity(final AccountDTO accountDTO) {
     return Account.builder()
         .documentNumber(accountDTO.getDocumentNumber())
         .uuid(randomUUID())
+        .build();
+  }
+
+  private AccountDTO entityToDto(final Account account) {
+    return AccountDTO.builder()
+        .documentNumber(account.getDocumentNumber())
+        .uuid(account.getUuid())
         .build();
   }
 }
