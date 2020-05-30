@@ -5,8 +5,8 @@ plugins {
 	id 'com.diffplug.gradle.spotless' version "${spotlessVersion}"
 }
 
-group = 'com.github.ricardomedeirosdacostajunior'
-version = '0.0.1-SNAPSHOT'
+group = "${group}"
+version = "${version}"
 sourceCompatibility = "${javaVersion}"
 targetCompatibility = "${javaVersion}"
 
