@@ -8,10 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @NoArgsConstructor(force = true, access = PROTECTED)
 @Getter
+@SuperBuilder
 public abstract class BaseEntity {
 
   @Id
