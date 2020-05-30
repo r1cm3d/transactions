@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/accounts")
+@RequestMapping(path = "/accounts", produces = APPLICATION_JSON_VALUE)
 public class AccountController {
 
-  @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+  @PostMapping(consumes = APPLICATION_JSON_VALUE)
   public void create(@Valid @NonNull final AccountDTO accountDTO) {
 
   }
