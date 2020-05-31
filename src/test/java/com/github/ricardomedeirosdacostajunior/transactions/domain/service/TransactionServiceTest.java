@@ -39,6 +39,7 @@ public class TransactionServiceTest {
 
   private static final String ACCOUNT_NOT_FOUND_MESSAGE = "Account invalid or not found";
   private static final UUID ACCOUNT_UUID = fromString("8e9b62a7-fac8-47fc-a4b2-8406e23d85b0");
+  private static final UUID TRANSACTION_UUID = fromString("35713a38-48d2-4b26-9dc1-751353d174ad");
   private static final BigDecimal AMOUNT = valueOf(123.45);
   private static final LocalDateTime EVENT_DATE = now();
 
@@ -57,28 +58,13 @@ public class TransactionServiceTest {
 
   @BeforeEach
   public void setup() {
-    var transactionUUID = fromString("35713a38-48d2-4b26-9dc1-751353d174ad");
     account = Account.builder().documentNumber("98457968").uuid(ACCOUNT_UUID).build();
-
-    expectedNegativeTransactionDTO =
-        TransactionDTO.builder()
-            .uuid(transactionUUID)
-            .accountUuid(ACCOUNT_UUID)
-            .operationType(1)
-            .amount(AMOUNT.negate())
-            .build();
-
-    expectedPositiveTransactionDTO =
-        TransactionDTO.builder()
-            .uuid(transactionUUID)
-            .accountUuid(ACCOUNT_UUID)
-            .operationType(4)
-            .amount(AMOUNT)
-            .build();
+    expectedNegativeTransactionDTO = buildTransactionDTO(1, AMOUNT.negate());
+    expectedPositiveTransactionDTO = buildTransactionDTO(4, AMOUNT);
 
     negativeTransaction =
         Transaction.builder()
-            .uuid(transactionUUID)
+            .uuid(TRANSACTION_UUID)
             .operationType(IN_CASH)
             .account(account)
             .eventDate(EVENT_DATE)
@@ -87,7 +73,7 @@ public class TransactionServiceTest {
 
     positiveTransaction =
         Transaction.builder()
-            .uuid(transactionUUID)
+            .uuid(TRANSACTION_UUID)
             .operationType(PAYMENT)
             .account(account)
             .eventDate(EVENT_DATE)
@@ -195,18 +181,19 @@ public class TransactionServiceTest {
   }
 
   private TransactionDTO buildInCashTransactionDTO() {
-    return TransactionDTO.builder()
-        .accountUuid(ACCOUNT_UUID)
-        .operationType(1)
-        .amount(AMOUNT)
-        .build();
+    return buildTransactionDTO(1, AMOUNT);
   }
 
   private TransactionDTO buildPaymentTransactionDTO() {
+    return buildTransactionDTO(4, AMOUNT);
+  }
+
+  private TransactionDTO buildTransactionDTO(final Integer operationType, final BigDecimal amount) {
     return TransactionDTO.builder()
+        .uuid(TRANSACTION_UUID)
         .accountUuid(ACCOUNT_UUID)
-        .operationType(4)
-        .amount(AMOUNT)
+        .operationType(operationType)
+        .amount(amount)
         .build();
   }
 }
