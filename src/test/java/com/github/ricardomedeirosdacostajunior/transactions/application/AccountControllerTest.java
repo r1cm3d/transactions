@@ -82,10 +82,14 @@ public class AccountControllerTest {
   }
 
   private Method getCreateMethod() {
-    return getDeclaredMethod(AccountController.class, "create");
+    return getMethodByName("create");
   }
 
   private Method getFindMethod() {
-    return getDeclaredMethod(AccountController.class, "find");
+    return getMethodByName("find");
+  }
+
+  private Method getMethodByName(final String name) {
+    return getDeclaredMethod(AccountController.class, name);
   }
 }
