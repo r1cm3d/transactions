@@ -5,6 +5,7 @@ import static java.util.UUID.randomUUID;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Account;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.AccountRepository;
+import java.util.UUID;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public class AccountService {
     var account = dtoToEntity(accountDTO);
 
     return entityToDto(accountRepository.save(account));
+  }
+
+  public AccountDTO find(@NonNull final UUID uuid) {
+    return null;
   }
 
   private Account dtoToEntity(final AccountDTO accountDTO) {

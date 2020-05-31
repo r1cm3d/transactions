@@ -1,6 +1,7 @@
 package com.github.ricardomedeirosdacostajunior.transactions.application;
 
 import static com.github.ricardomedeirosdacostajunior.transactions.ReflectionHelper.getDeclaredMethod;
+import static java.util.UUID.fromString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -13,6 +14,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.service.AccountService;
 import java.lang.reflect.Method;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountControllerTest {
+
+  private static final UUID aUUID = fromString("dfe579df-d389-4768-9ef6-6bdbbb4818e4");
 
   @InjectMocks private AccountController accountController;
 
@@ -75,6 +79,16 @@ public class AccountControllerTest {
     assertAll(
         () -> assertThat(getMappingAnnotation, is(notNullValue())),
         () -> assertThat(getMappingAnnotation.path(), hasItemInArray("/{uuid}")));
+  }
+
+  @Test
+  public void findMethodMustCallAccountServiceFind() {
+    var expectedAccountDTO = aAccountDTO();
+    doReturn(expectedAccountDTO).when(accountService).find(aUUID);
+
+    var actualAccountDTO = accountController.find(aUUID);
+
+    assertThat(actualAccountDTO, is(equalTo(expectedAccountDTO)));
   }
 
   private AccountDTO aAccountDTO() {

@@ -28,6 +28,6 @@ public class AccountController {
 
   @GetMapping(path = "/{uuid}")
   public AccountDTO find(@PathVariable UUID uuid) {
-    return null;
+    return accountService.find(uuid);
   }
 }
