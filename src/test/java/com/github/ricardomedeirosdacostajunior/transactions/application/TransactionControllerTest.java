@@ -1,7 +1,11 @@
 package com.github.ricardomedeirosdacostajunior.transactions.application;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.ArrayMatching.hasItemInArray;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.TransactionDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.service.TransactionService;
@@ -11,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +35,19 @@ public class TransactionControllerTest {
   @Test
   public void transactionControllerMustBeAnnotatedWithRestControllerAnnotation() {
     assertThat(TransactionController.class.isAnnotationPresent(RestController.class), is(true));
+  }
+
+  @Test
+  public void transactionControllerMustBeAnnotatedWithRequestMappingAnnotation() {
+    var requestMappingAnnotation = TransactionController.class.getAnnotation(RequestMapping.class);
+
+    assertAll(
+        "requestMappingAnnotation",
+        () -> assertThat(requestMappingAnnotation, is(notNullValue())),
+        () -> assertThat(requestMappingAnnotation.path(), hasItemInArray("/transactions")),
+        () ->
+            assertThat(
+                requestMappingAnnotation.produces(), hasItemInArray(APPLICATION_JSON_VALUE)));
   }
 
   private TransactionDTO aTransactionDTO() {
