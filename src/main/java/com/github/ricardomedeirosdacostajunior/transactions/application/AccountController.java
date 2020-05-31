@@ -22,5 +22,4 @@ public class AccountController {
   public AccountDTO create(@Valid @NonNull final AccountDTO accountDTO) {
     return accountService.create(accountDTO);
   }
-
 }

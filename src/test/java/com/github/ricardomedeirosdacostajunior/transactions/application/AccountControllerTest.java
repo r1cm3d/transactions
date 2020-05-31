@@ -25,11 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 @ExtendWith(MockitoExtension.class)
 public class AccountControllerTest {
 
-  @InjectMocks
-  private AccountController accountController;
+  @InjectMocks private AccountController accountController;
 
-  @Mock
-  private AccountService accountService;
+  @Mock private AccountService accountService;
 
   @Test
   public void accountControllerMustBeAnnotatedWithRestControllerAnnotation() {
@@ -43,10 +41,10 @@ public class AccountControllerTest {
     assertAll(
         "requestMappingAnnotation",
         () -> assertThat(requestMappingAnnotation, is(notNullValue())),
+        () -> assertThat(requestMappingAnnotation.path(), hasItemInArray("/accounts")),
         () ->
-            assertThat(requestMappingAnnotation.path(), hasItemInArray("/accounts")),
-        () ->
-            assertThat(requestMappingAnnotation.produces(), hasItemInArray(APPLICATION_JSON_VALUE)));
+            assertThat(
+                requestMappingAnnotation.produces(), hasItemInArray(APPLICATION_JSON_VALUE)));
   }
 
   @Test

@@ -36,13 +36,9 @@ public class AccountServiceTest {
 
   private Account account;
 
-
   @BeforeEach
   public void setup() {
-    account = Account.builder()
-        .documentNumber(DOCUMENT_NUMBER)
-        .uuid(fromString(UUID))
-        .build();
+    account = Account.builder().documentNumber(DOCUMENT_NUMBER).uuid(fromString(UUID)).build();
   }
 
   @Test
@@ -62,6 +58,5 @@ public class AccountServiceTest {
         "accountDTOReturned",
         () -> assertThat(actualAccountDTO.getUuid(), is(equalTo(fromString(UUID)))),
         () -> assertThat(accountCaptured.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
-
   }
 }

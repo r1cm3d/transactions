@@ -20,24 +20,21 @@ public class AccountControllerIT {
   private static final String DOCUMENT_NUMBER = "42";
   private static final String ACCOUNT_ENDPOINT = "/accounts";
 
-  @MockBean
-  private AccountController accountController;
+  @MockBean private AccountController accountController;
 
-  @Autowired
-  private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
-  @Autowired
-  private ObjectMapper objectMapper;
+  @Autowired private ObjectMapper objectMapper;
 
   @Test
   public void create() throws Exception {
     var requestAccountDTO = AccountDTO.builder().documentNumber(DOCUMENT_NUMBER).build();
 
-    mockMvc.perform(post(ACCOUNT_ENDPOINT)
-        .contentType(APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(requestAccountDTO)))
-        .andExpect(
-            status().isOk());
+    mockMvc
+        .perform(
+            post(ACCOUNT_ENDPOINT)
+                .contentType(APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(requestAccountDTO)))
+        .andExpect(status().isOk());
   }
-
 }

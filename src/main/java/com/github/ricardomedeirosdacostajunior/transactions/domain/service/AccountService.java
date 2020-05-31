@@ -6,7 +6,9 @@ import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDT
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Account;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.AccountRepository;
 import lombok.NonNull;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AccountService {
 
   private AccountRepository accountRepository;
