@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.lang.reflect.Field;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
@@ -45,6 +46,16 @@ public class TransactionTest {
         "enumeratedAnnotation",
         () -> assertThat(enumeratedAnnotation, is(notNullValue())),
         () -> assertThat(enumeratedAnnotation.value(), is(equalTo(ORDINAL))));
+  }
+
+  @Test
+  public void operationTypeMustBeAnnotatedWithColumnAnnotation() {
+    var columnAnnotation = getOperationTypeField().getAnnotation(Column.class);
+
+    assertAll(
+        "columnAnnotation",
+        () -> assertThat(columnAnnotation, is(notNullValue())),
+        () -> assertThat(columnAnnotation.name(), is(equalTo("operation_type"))));
   }
 
   private Field getAccountField() {
