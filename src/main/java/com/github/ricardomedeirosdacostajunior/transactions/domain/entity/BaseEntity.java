@@ -6,9 +6,9 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
@@ -19,6 +19,6 @@ public abstract class BaseEntity {
 
   @Id
   @Column(columnDefinition = "uuid")
-  @NonNull
+  @NotNull
   private final UUID uuid;
 }
