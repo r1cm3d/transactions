@@ -34,6 +34,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.stereotype.Service;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {
@@ -64,6 +65,11 @@ public class TransactionServiceTest {
     expectedPositiveTransactionDTO = buildTransactionDTO(4, AMOUNT);
     negativeTransaction = buildTransaction(IN_CASH, AMOUNT.negate());
     positiveTransaction = buildTransaction(PAYMENT, AMOUNT);
+  }
+
+  @Test
+  public void transactionServiceClassMustBeAnnotatedWithServiceAnnotation() {
+    assertThat(TransactionService.class.isAnnotationPresent(Service.class), is(true));
   }
 
   @Test

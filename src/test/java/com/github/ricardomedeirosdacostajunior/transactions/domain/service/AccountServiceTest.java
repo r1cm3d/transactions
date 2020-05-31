@@ -25,6 +25,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.stereotype.Service;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTest {
@@ -44,6 +45,11 @@ public class AccountServiceTest {
   @BeforeEach
   public void setup() {
     account = Account.builder().documentNumber(DOCUMENT_NUMBER).uuid(fromString(aUUID)).build();
+  }
+
+  @Test
+  public void accountServiceClassMustBeAnnotatedWithServiceAnnotation() {
+    assertThat(AccountService.class.isAnnotationPresent(Service.class), is(true));
   }
 
   @Test
