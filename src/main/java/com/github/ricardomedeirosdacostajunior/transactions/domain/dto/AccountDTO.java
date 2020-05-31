@@ -1,14 +1,15 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.dto;
 
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NonNull;
 import lombok.Value;
 
 @Value
 @Builder
+@AllArgsConstructor
 public class AccountDTO {
 
-  @NonNull String documentNumber;
+  String documentNumber;
   UUID uuid;
 }
