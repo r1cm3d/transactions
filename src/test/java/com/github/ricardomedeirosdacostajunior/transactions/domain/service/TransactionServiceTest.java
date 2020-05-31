@@ -1,5 +1,6 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.service;
 
+import static java.util.Optional.empty;
 import static java.util.UUID.fromString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -27,7 +28,7 @@ public class TransactionServiceTest {
   @Test
   public void createWhenAccountIsNull() {
     var transactionDTOWithInvalidAccount = TransactionDTO.builder().build();
-    doReturn(null).when(accountService).find(null);
+    doReturn(empty()).when(accountService).findOptional(null);
 
     var invalidAccountException =
         assertThrows(
@@ -41,7 +42,7 @@ public class TransactionServiceTest {
   public void createWhenAccountWasNotFound() {
     var aUUID = fromString("c4682098-9778-4dca-ba45-fe77eed53279");
     var transactionDTOWithInvalidAccount = TransactionDTO.builder().accountUuid(aUUID).build();
-    doReturn(null).when(accountService).find(aUUID);
+    doReturn(empty()).when(accountService).findOptional(aUUID);
 
     var invalidAccountException =
         assertThrows(

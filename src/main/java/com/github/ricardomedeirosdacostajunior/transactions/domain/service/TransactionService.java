@@ -1,7 +1,5 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.service;
 
-import static java.util.Objects.isNull;
-
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.TransactionDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidAccountException;
 import javax.validation.constraints.NotNull;
@@ -21,9 +19,9 @@ public class TransactionService {
   }
 
   private Transaction dtoToEntity(final TransactionDTO transactionDTO) {
-    var account = accountService.find(transactionDTO.getAccountUuid());
-
-    if (isNull(account)) throw new InvalidAccountException();
+    accountService
+        .findOptional(transactionDTO.getAccountUuid())
+        .orElseThrow(InvalidAccountException::new);
 
     return null;
   }
