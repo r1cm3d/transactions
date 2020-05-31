@@ -20,9 +20,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class OperationTypesEnumerationTest {
 
   @ParameterizedTest
-  @EnumSource(
-      value = OperationTypesEnumeration.class,
-      names = {"IN_CASH", "IN_INSTALLMENTS", "WITHDRAW", "PAYMENT"})
+  @EnumSource(value = OperationTypesEnumeration.class)
   public void getValueFromOperationTypesIsValid(
       final OperationTypesEnumeration operationTypesEnumeration) {
     var validOperationTypes = asList(IN_CASH, IN_INSTALLMENTS, WITHDRAW, PAYMENT);
@@ -47,5 +45,13 @@ public class OperationTypesEnumerationTest {
             () -> OperationTypesEnumeration.valueOf(invalidValue));
 
     assertThat(invalidOperationType.getMessage(), is(equalTo("Operation type is invalid")));
+  }
+
+  @ParameterizedTest
+  @EnumSource(
+      value = OperationTypesEnumeration.class,
+      names = {"IN_CASH", "IN_INSTALLMENTS", "WITHDRAW"})
+  public void isNegative(final OperationTypesEnumeration operationType) {
+    assertThat(operationType.isNegative(), is(true));
   }
 }

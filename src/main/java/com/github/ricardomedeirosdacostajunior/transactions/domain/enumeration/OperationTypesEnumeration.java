@@ -1,5 +1,7 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.enumeration;
 
+import static java.util.Arrays.asList;
+
 import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidOperationTypeException;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,5 +32,9 @@ public enum OperationTypesEnumeration {
       default:
         throw new InvalidOperationTypeException();
     }
+  }
+
+  public boolean isNegative() {
+    return asList(IN_CASH, IN_INSTALLMENTS, WITHDRAW).contains(this);
   }
 }
