@@ -1,9 +1,17 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.entity;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class Transaction extends BaseEntity {
+@NoArgsConstructor(force = true, access = PRIVATE)
+public final class Transaction extends BaseEntity {
+
+  @ManyToOne
+  private final Account account;
 
 //      () -> assertThat(transactionCaptured.getAccount(), is(equalTo(account))),
 //      () -> assertThat(transactionCaptured.getOperationType(), is(equalTo(IN_CASH))),
