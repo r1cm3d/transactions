@@ -33,7 +33,6 @@ public class TransactionTest {
     var joinColumnAnnotation = getAccountField().getAnnotation(JoinColumn.class);
 
     assertAll(
-        "joinColumnAnnotation",
         () -> assertThat(joinColumnAnnotation, is(notNullValue())),
         () -> assertThat(joinColumnAnnotation.name(), is(equalTo("account_id"))));
   }
@@ -43,7 +42,6 @@ public class TransactionTest {
     var enumeratedAnnotation = getOperationTypeField().getAnnotation(Enumerated.class);
 
     assertAll(
-        "enumeratedAnnotation",
         () -> assertThat(enumeratedAnnotation, is(notNullValue())),
         () -> assertThat(enumeratedAnnotation.value(), is(equalTo(ORDINAL))));
   }
@@ -53,9 +51,18 @@ public class TransactionTest {
     var columnAnnotation = getOperationTypeField().getAnnotation(Column.class);
 
     assertAll(
-        "columnAnnotation",
         () -> assertThat(columnAnnotation, is(notNullValue())),
         () -> assertThat(columnAnnotation.name(), is(equalTo("operation_type"))));
+  }
+
+  @Test
+  public void eventDateMustBeAnnotatedWithColumnAnnotation() {
+    var columnAnnotation = getEventDateField().getAnnotation(Column.class);
+
+    assertAll(
+        () -> assertThat(columnAnnotation, is(notNullValue())),
+        () -> assertThat(columnAnnotation.name(), is(equalTo("event_date"))),
+        () -> assertThat(columnAnnotation.columnDefinition(), is(equalTo("TIMESTAMP"))));
   }
 
   private Field getAccountField() {
@@ -64,6 +71,10 @@ public class TransactionTest {
 
   private Field getOperationTypeField() {
     return getField("operationType");
+  }
+
+  private Field getEventDateField() {
+    return getField("eventDate");
   }
 
   private Field getField(final String name) {
