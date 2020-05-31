@@ -18,6 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {
 
+  private static final String ACCOUNT_NOT_FOUND_MESSAGE = "Account invalid or not found";
+
   @InjectMocks private TransactionService transactionService;
 
   @Mock private AccountService accountService;
@@ -32,7 +34,7 @@ public class TransactionServiceTest {
             InvalidAccountException.class,
             () -> transactionService.create(transactionDTOWithInvalidAccount));
 
-    assertThat(invalidAccountException.getMessage(), is(equalTo("Account invalid or not found")));
+    assertThat(invalidAccountException.getMessage(), is(equalTo(ACCOUNT_NOT_FOUND_MESSAGE)));
   }
 
   @Test
@@ -46,6 +48,6 @@ public class TransactionServiceTest {
             InvalidAccountException.class,
             () -> transactionService.create(transactionDTOWithInvalidAccount));
 
-    assertThat(invalidAccountException.getMessage(), is(equalTo("Account invalid or not found")));
+    assertThat(invalidAccountException.getMessage(), is(equalTo(ACCOUNT_NOT_FOUND_MESSAGE)));
   }
 }
