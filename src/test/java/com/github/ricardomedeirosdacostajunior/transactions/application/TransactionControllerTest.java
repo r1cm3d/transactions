@@ -1,5 +1,6 @@
 package com.github.ricardomedeirosdacostajunior.transactions.application;
 
+import static com.github.ricardomedeirosdacostajunior.transactions.ReflectionHelper.getDeclaredMethod;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,6 +50,16 @@ public class TransactionControllerTest {
         () ->
             assertThat(
                 requestMappingAnnotation.produces(), hasItemInArray(APPLICATION_JSON_VALUE)));
+  }
+
+  @Test
+  public void createMethodMustBeAnnotatedWithPostMappingAnnotation() {
+    var postMappingAnnotation =
+        getDeclaredMethod(TransactionController.class, "create").getAnnotation(PostMapping.class);
+
+    assertAll(
+        () -> assertThat(postMappingAnnotation, is(notNullValue())),
+        () -> assertThat(postMappingAnnotation.consumes(), hasItemInArray(APPLICATION_JSON_VALUE)));
   }
 
   private TransactionDTO aTransactionDTO() {
