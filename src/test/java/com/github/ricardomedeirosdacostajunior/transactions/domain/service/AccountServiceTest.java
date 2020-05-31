@@ -56,11 +56,9 @@ public class AccountServiceTest {
     verify(accountRepository).save(accountArgumentCaptor.capture());
     var accountCaptured = accountArgumentCaptor.getValue();
     assertAll(
-        "accountCaptured",
         () -> assertThat(accountCaptured.getUuid(), is(notNullValue())),
         () -> assertThat(accountCaptured.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
     assertAll(
-        "accountDTOReturned",
         () -> assertThat(actualAccountDTO.getUuid(), is(equalTo(fromString(aUUID)))),
         () -> assertThat(accountCaptured.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
   }
@@ -73,7 +71,6 @@ public class AccountServiceTest {
 
     verify(accountRepository).findById(requestUUID);
     assertAll(
-        "accountDTOReturned",
         () -> assertThat(actualAccountDTO.getUuid(), is(equalTo(fromString(aUUID)))),
         () -> assertThat(actualAccountDTO.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
   }

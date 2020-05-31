@@ -52,7 +52,6 @@ public class AccountControllerTest {
     var requestMappingAnnotation = AccountController.class.getAnnotation(RequestMapping.class);
 
     assertAll(
-        "requestMappingAnnotation",
         () -> assertThat(requestMappingAnnotation, is(notNullValue())),
         () -> assertThat(requestMappingAnnotation.path(), hasItemInArray("/accounts")),
         () ->

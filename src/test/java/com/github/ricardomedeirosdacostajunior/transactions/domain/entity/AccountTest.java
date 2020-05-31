@@ -27,7 +27,6 @@ public class AccountTest {
         getDeclaredField(Account.class, DOCUMENT_NUMBER_ATTRIBUTE).getAnnotation(Column.class);
 
     assertAll(
-        "documentNumberColumnAnnotation",
         () -> assertThat(documentNumberColumnAnnotation, is(notNullValue())),
         () ->
             assertThat(documentNumberColumnAnnotation.name(), is(equalTo(DOCUMENT_NUMBER_COLUMN))));

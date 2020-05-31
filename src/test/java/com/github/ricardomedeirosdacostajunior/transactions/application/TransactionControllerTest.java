@@ -46,7 +46,6 @@ public class TransactionControllerTest {
     var requestMappingAnnotation = TransactionController.class.getAnnotation(RequestMapping.class);
 
     assertAll(
-        "requestMappingAnnotation",
         () -> assertThat(requestMappingAnnotation, is(notNullValue())),
         () -> assertThat(requestMappingAnnotation.path(), hasItemInArray("/transactions")),
         () ->

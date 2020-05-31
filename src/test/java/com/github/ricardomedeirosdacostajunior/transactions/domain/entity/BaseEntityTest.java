@@ -32,7 +32,6 @@ public class BaseEntityTest {
     var uuidColumnAnnotation = getUUUIDField().getAnnotation(Column.class);
 
     assertAll(
-        "uuidColumnAnnotation",
         () -> assertThat(uuidColumnAnnotation, is(notNullValue())),
         () -> assertThat(uuidColumnAnnotation.columnDefinition(), is(equalTo(UUID_FIELD))));
   }
