@@ -5,11 +5,14 @@ import static com.github.ricardomedeirosdacostajunior.transactions.domain.enumer
 import static com.github.ricardomedeirosdacostajunior.transactions.domain.enumeration.OperationTypesEnumeration.PAYMENT;
 import static com.github.ricardomedeirosdacostajunior.transactions.domain.enumeration.OperationTypesEnumeration.WITHDRAW;
 import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidOperationTypeException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -33,5 +36,16 @@ public class OperationTypesEnumerationTest {
     var operationType = OperationTypesEnumeration.valueOf(value);
 
     assertThat(operationType, is(notNullValue()));
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {0, 5})
+  public void valueOfWithInvalidValues(int invalidValue) {
+    var invalidOperationType =
+        assertThrows(
+            InvalidOperationTypeException.class,
+            () -> OperationTypesEnumeration.valueOf(invalidValue));
+
+    assertThat(invalidOperationType.getMessage(), is(equalTo("Operation type is invalid")));
   }
 }
