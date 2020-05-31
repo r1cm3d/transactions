@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.TransactionDTO;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -27,22 +26,20 @@ public class TransactionControllerIT {
   private static final Integer PAYMENT = 4;
   private static final BigDecimal AMOUNT = valueOf(123.45);
 
-  @MockBean
-  private TransactionController transactionController;
+  @MockBean private TransactionController transactionController;
 
-  @Autowired
-  private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
   @Autowired private ObjectMapper objectMapper;
 
   @Test
   public void create() throws Exception {
-    var requestTransactionDTO = TransactionDTO.builder()
-        .accountUuid(ACCOUNT_UUID)
-        .operationType(PAYMENT)
-        .amount(AMOUNT)
-        .build();
-
+    var requestTransactionDTO =
+        TransactionDTO.builder()
+            .accountUuid(ACCOUNT_UUID)
+            .operationType(PAYMENT)
+            .amount(AMOUNT)
+            .build();
 
     mockMvc
         .perform(
@@ -52,4 +49,3 @@ public class TransactionControllerIT {
         .andExpect(status().isOk());
   }
 }
-
