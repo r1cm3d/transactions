@@ -100,32 +100,8 @@ public class TransactionServiceTest {
 
     var actualTransactionDTO = transactionService.create(negativeTransactionDTO);
 
-    verify(transactionRepository).save(transactionArgumentCaptor.capture());
-    var transactionCaptured = transactionArgumentCaptor.getValue();
-    assertAll(
-        () -> assertThat(transactionCaptured.getAccount(), is(equalTo(account))),
-        () -> assertThat(transactionCaptured.getOperationType(), is(equalTo(IN_CASH))),
-        () -> assertThat(transactionCaptured.getAmount(), is(equalTo(AMOUNT.negate()))),
-        () -> assertThat(transactionCaptured.getUuid(), is(notNullValue())),
-        () -> assertThat(transactionCaptured.getEventDate(), is(notNullValue())));
-    assertAll(
-        () ->
-            assertThat(
-                actualTransactionDTO.getUuid(),
-                is(equalTo(expectedNegativeTransactionDTO.getUuid()))),
-        () ->
-            assertThat(
-                actualTransactionDTO.getAccountUuid(),
-                is(equalTo(expectedNegativeTransactionDTO.getAccountUuid()))),
-        () ->
-            assertThat(
-                actualTransactionDTO.getAmount(),
-                is(equalTo(expectedNegativeTransactionDTO.getAmount()))),
-        () ->
-            assertThat(
-                actualTransactionDTO.getOperationType(),
-                is(equalTo(expectedNegativeTransactionDTO.getOperationType()))),
-        () -> assertThat(actualTransactionDTO.getEventDate(), is(notNullValue())));
+    verifyAndAssertForCreate(
+        IN_CASH, AMOUNT.negate(), actualTransactionDTO, expectedNegativeTransactionDTO);
   }
 
   @Test
@@ -135,31 +111,39 @@ public class TransactionServiceTest {
 
     var actualTransactionDTO = transactionService.create(positiveTransactionDTO);
 
+    verifyAndAssertForCreate(PAYMENT, AMOUNT, actualTransactionDTO, expectedPositiveTransactionDTO);
+  }
+
+  private void verifyAndAssertForCreate(
+      final OperationTypesEnumeration operationTypesEnumeration,
+      final BigDecimal amount,
+      final TransactionDTO actualTransactionDTO,
+      final TransactionDTO expectedTransactionDTO) {
     verify(transactionRepository).save(transactionArgumentCaptor.capture());
     var transactionCaptured = transactionArgumentCaptor.getValue();
     assertAll(
         () -> assertThat(transactionCaptured.getAccount(), is(equalTo(account))),
-        () -> assertThat(transactionCaptured.getOperationType(), is(equalTo(PAYMENT))),
-        () -> assertThat(transactionCaptured.getAmount(), is(equalTo(AMOUNT))),
+        () ->
+            assertThat(
+                transactionCaptured.getOperationType(), is(equalTo(operationTypesEnumeration))),
+        () -> assertThat(transactionCaptured.getAmount(), is(equalTo(amount))),
         () -> assertThat(transactionCaptured.getUuid(), is(notNullValue())),
         () -> assertThat(transactionCaptured.getEventDate(), is(notNullValue())));
     assertAll(
         () ->
             assertThat(
-                actualTransactionDTO.getUuid(),
-                is(equalTo(expectedPositiveTransactionDTO.getUuid()))),
+                actualTransactionDTO.getUuid(), is(equalTo(expectedTransactionDTO.getUuid()))),
         () ->
             assertThat(
                 actualTransactionDTO.getAccountUuid(),
-                is(equalTo(expectedPositiveTransactionDTO.getAccountUuid()))),
+                is(equalTo(expectedTransactionDTO.getAccountUuid()))),
         () ->
             assertThat(
-                actualTransactionDTO.getAmount(),
-                is(equalTo(expectedPositiveTransactionDTO.getAmount()))),
+                actualTransactionDTO.getAmount(), is(equalTo(expectedTransactionDTO.getAmount()))),
         () ->
             assertThat(
                 actualTransactionDTO.getOperationType(),
-                is(equalTo(expectedPositiveTransactionDTO.getOperationType()))),
+                is(equalTo(expectedTransactionDTO.getOperationType()))),
         () -> assertThat(actualTransactionDTO.getEventDate(), is(notNullValue())));
   }
 
