@@ -18,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,11 +68,24 @@ public class AccountControllerTest {
     assertThat(actualAccountDTO, is(equalTo(expectedAccountDTO)));
   }
 
+  @Test
+  public void findMethodMustBeAnnotatedWithGetMappingAnnotation() {
+    var getMappingAnnotation = getFindMethod().getAnnotation(GetMapping.class);
+
+    assertAll(
+        () -> assertThat(getMappingAnnotation, is(notNullValue())),
+        () -> assertThat(getMappingAnnotation.path(), hasItemInArray("/{uuid}")));
+  }
+
   private AccountDTO aAccountDTO() {
     return AccountDTO.builder().documentNumber("aDocumentValue").build();
   }
 
   private Method getCreateMethod() {
     return getDeclaredMethod(AccountController.class, "create");
+  }
+
+  private Method getFindMethod() {
+    return getDeclaredMethod(AccountController.class, "find");
   }
 }
