@@ -1,8 +1,12 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.entity;
 
+import static javax.persistence.EnumType.ORDINAL;
 import static lombok.AccessLevel.PRIVATE;
 
+import com.github.ricardomedeirosdacostajunior.transactions.domain.enumeration.OperationTypesEnumeration;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.NoArgsConstructor;
 
@@ -11,13 +15,9 @@ import lombok.NoArgsConstructor;
 public final class Transaction extends BaseEntity {
 
   @ManyToOne
+  @JoinColumn(name = "account_id")
   private final Account account;
 
-//      () -> assertThat(transactionCaptured.getAccount(), is(equalTo(account))),
-//      () -> assertThat(transactionCaptured.getOperationType(), is(equalTo(IN_CASH))),
-//      () -> assertThat(transactionCaptured.getAmount(), is(equalTo(AMOUNT.negate()))),
-//      () -> assertThat(transactionCaptured.getEventDate(), is(notNullValue())),
-//      () -> assertThat(transactionCaptured.getUuid(), is(equalTo(actualTransactionDTO.getAccountUuid()))),
-//      () -> assertThat(transactionCaptured.getEventDate(), is(equalTo(actualTransactionDTO.getEventDate()))));
-
+  @Enumerated(ORDINAL)
+  private final OperationTypesEnumeration operationType;
 }
