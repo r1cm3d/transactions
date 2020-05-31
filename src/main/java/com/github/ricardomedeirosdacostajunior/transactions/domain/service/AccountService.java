@@ -8,12 +8,14 @@ import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.Ac
 import java.util.Optional;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class AccountService {
 
-  private AccountRepository accountRepository;
+  private final AccountRepository accountRepository;
 
   public AccountDTO create(@NotNull final AccountDTO accountDTO) {
     var account = dtoToEntity(accountDTO);

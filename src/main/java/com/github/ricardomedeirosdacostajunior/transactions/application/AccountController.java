@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AccountController {
 
-  private AccountService accountService;
+  private final AccountService accountService;
 
   @PostMapping(consumes = APPLICATION_JSON_VALUE)
   public AccountDTO create(@NotNull final AccountDTO accountDTO) {

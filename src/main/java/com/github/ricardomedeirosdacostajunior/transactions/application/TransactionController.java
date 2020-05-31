@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/transactions", produces = APPLICATION_JSON_VALUE)
 public class TransactionController {
 
-  private TransactionService transactionService;
+  private final TransactionService transactionService;
 
   @PostMapping(consumes = APPLICATION_JSON_VALUE)
   public TransactionDTO create(@NotNull @RequestBody final TransactionDTO transactionDTO) {
