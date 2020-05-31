@@ -1,11 +1,13 @@
 package com.github.ricardomedeirosdacostajunior.transactions.application;
 
 import static com.github.ricardomedeirosdacostajunior.transactions.ReflectionHelper.getDeclaredMethod;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.ArrayMatching.hasItemInArray;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.TransactionDTO;
@@ -60,6 +62,16 @@ public class TransactionControllerTest {
     assertAll(
         () -> assertThat(postMappingAnnotation, is(notNullValue())),
         () -> assertThat(postMappingAnnotation.consumes(), hasItemInArray(APPLICATION_JSON_VALUE)));
+  }
+
+  @Test
+  public void createMethodMustCallTransactionServiceCreate() {
+    var requestDTO = aTransactionDTO();
+    doReturn(expectedTransactionDTO).when(transactionService).create(requestDTO);
+
+    var actualAccountDTO = transactionController.create(requestDTO);
+
+    assertThat(actualAccountDTO, is(equalTo(expectedTransactionDTO)));
   }
 
   private TransactionDTO aTransactionDTO() {

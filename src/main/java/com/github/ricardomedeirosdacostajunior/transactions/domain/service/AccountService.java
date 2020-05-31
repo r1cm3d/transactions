@@ -6,7 +6,7 @@ import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDT
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Account;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.AccountRepository;
 import java.util.UUID;
-import lombok.NonNull;
+import javax.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,13 +14,13 @@ public class AccountService {
 
   private AccountRepository accountRepository;
 
-  public AccountDTO create(@NonNull final AccountDTO accountDTO) {
+  public AccountDTO create(@NotNull final AccountDTO accountDTO) {
     var account = dtoToEntity(accountDTO);
 
     return entityToDto(accountRepository.save(account));
   }
 
-  public AccountDTO find(@NonNull final UUID uuid) {
+  public AccountDTO find(@NotNull final UUID uuid) {
     return accountRepository.findById(uuid).map(this::entityToDto).orElse(null);
   }
 
