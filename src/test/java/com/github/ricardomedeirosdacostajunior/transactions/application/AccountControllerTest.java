@@ -15,6 +15,7 @@ import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDT
 import com.github.ricardomedeirosdacostajunior.transactions.domain.service.AccountService;
 import java.lang.reflect.Method;
 import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,6 +34,13 @@ public class AccountControllerTest {
   @InjectMocks private AccountController accountController;
 
   @Mock private AccountService accountService;
+
+  private AccountDTO expectedAccountDTO;
+
+  @BeforeEach
+  public void setup() {
+    expectedAccountDTO = aAccountDTO();
+  }
 
   @Test
   public void accountControllerMustBeAnnotatedWithRestControllerAnnotation() {
@@ -64,7 +72,6 @@ public class AccountControllerTest {
   @Test
   public void createMethodMustCallAccountServiceCreate() {
     var requestDTO = aAccountDTO();
-    var expectedAccountDTO = aAccountDTO();
     doReturn(expectedAccountDTO).when(accountService).create(requestDTO);
 
     var actualAccountDTO = accountController.create(requestDTO);
@@ -83,7 +90,6 @@ public class AccountControllerTest {
 
   @Test
   public void findMethodMustCallAccountServiceFind() {
-    var expectedAccountDTO = aAccountDTO();
     doReturn(expectedAccountDTO).when(accountService).find(aUUID);
 
     var actualAccountDTO = accountController.find(aUUID);
