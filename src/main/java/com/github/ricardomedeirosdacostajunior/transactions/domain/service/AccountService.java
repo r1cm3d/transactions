@@ -21,7 +21,7 @@ public class AccountService {
   }
 
   public AccountDTO find(@NonNull final UUID uuid) {
-    return null;
+    return accountRepository.findById(uuid).map(this::entityToDto).orElse(null);
   }
 
   private Account dtoToEntity(final AccountDTO accountDTO) {

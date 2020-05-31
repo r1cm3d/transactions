@@ -1,9 +1,12 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.service;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 import static java.util.UUID.fromString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,6 +16,7 @@ import static org.mockito.Mockito.verify;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Account;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.AccountRepository;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +30,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class AccountServiceTest {
 
   private static final String DOCUMENT_NUMBER = "12345678900";
-  private static final String UUID = "3554cc7e-ae24-4ab7-b52d-fbfd53644bfe";
+  private static final String aUUID = "3554cc7e-ae24-4ab7-b52d-fbfd53644bfe";
+  private static final UUID requestUUID = fromString(aUUID);
 
   @InjectMocks private AccountService accountService;
 
@@ -38,7 +43,7 @@ public class AccountServiceTest {
 
   @BeforeEach
   public void setup() {
-    account = Account.builder().documentNumber(DOCUMENT_NUMBER).uuid(fromString(UUID)).build();
+    account = Account.builder().documentNumber(DOCUMENT_NUMBER).uuid(fromString(aUUID)).build();
   }
 
   @Test
@@ -56,7 +61,30 @@ public class AccountServiceTest {
         () -> assertThat(accountCaptured.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
     assertAll(
         "accountDTOReturned",
-        () -> assertThat(actualAccountDTO.getUuid(), is(equalTo(fromString(UUID)))),
+        () -> assertThat(actualAccountDTO.getUuid(), is(equalTo(fromString(aUUID)))),
         () -> assertThat(accountCaptured.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
+  }
+
+  @Test
+  public void find() {
+    doReturn(of(account)).when(accountRepository).findById(requestUUID);
+
+    var actualAccountDTO = accountService.find(requestUUID);
+
+    verify(accountRepository).findById(requestUUID);
+    assertAll(
+        "accountDTOReturned",
+        () -> assertThat(actualAccountDTO.getUuid(), is(equalTo(fromString(aUUID)))),
+        () -> assertThat(actualAccountDTO.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
+  }
+
+  @Test
+  public void findWhenThereIsNoAccount() {
+    doReturn(empty()).when(accountRepository).findById(requestUUID);
+
+    var actualAccountDTO = accountService.find(requestUUID);
+
+    verify(accountRepository).findById(requestUUID);
+    assertThat(actualAccountDTO, is(nullValue()));
   }
 }
