@@ -54,4 +54,12 @@ public class OperationTypesEnumerationTest {
   public void isNegative(final OperationTypesEnumeration operationType) {
     assertThat(operationType.isNegative(), is(true));
   }
+
+  @ParameterizedTest
+  @EnumSource(
+      value = OperationTypesEnumeration.class,
+      names = {"PAYMENT"})
+  public void isPositive(final OperationTypesEnumeration operationType) {
+    assertThat(operationType.isNegative(), is(false));
+  }
 }
