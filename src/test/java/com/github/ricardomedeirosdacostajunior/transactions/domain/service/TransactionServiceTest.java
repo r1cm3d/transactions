@@ -20,6 +20,7 @@ import static org.mockito.Mockito.verify;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.TransactionDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Account;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Transaction;
+import com.github.ricardomedeirosdacostajunior.transactions.domain.enumeration.OperationTypesEnumeration;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidAccountException;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.TransactionRepository;
 import java.math.BigDecimal;
@@ -61,24 +62,8 @@ public class TransactionServiceTest {
     account = Account.builder().documentNumber("98457968").uuid(ACCOUNT_UUID).build();
     expectedNegativeTransactionDTO = buildTransactionDTO(1, AMOUNT.negate());
     expectedPositiveTransactionDTO = buildTransactionDTO(4, AMOUNT);
-
-    negativeTransaction =
-        Transaction.builder()
-            .uuid(TRANSACTION_UUID)
-            .operationType(IN_CASH)
-            .account(account)
-            .eventDate(EVENT_DATE)
-            .amount(AMOUNT.negate())
-            .build();
-
-    positiveTransaction =
-        Transaction.builder()
-            .uuid(TRANSACTION_UUID)
-            .operationType(PAYMENT)
-            .account(account)
-            .eventDate(EVENT_DATE)
-            .amount(AMOUNT)
-            .build();
+    negativeTransaction = buildTransaction(IN_CASH, AMOUNT.negate());
+    positiveTransaction = buildTransaction(PAYMENT, AMOUNT);
   }
 
   @Test
@@ -110,7 +95,7 @@ public class TransactionServiceTest {
 
   @Test
   public void createWithNegativeValue() {
-    var negativeTransactionDTO = buildInCashTransactionDTO();
+    var negativeTransactionDTO = buildTransactionDTO(1, AMOUNT.negate());
     doReturn(of(account)).when(accountService).findOptional(ACCOUNT_UUID);
     doReturn(negativeTransaction).when(transactionRepository).save(any(Transaction.class));
 
@@ -146,7 +131,7 @@ public class TransactionServiceTest {
 
   @Test
   public void createWithPositiveValue() {
-    var positiveTransactionDTO = buildPaymentTransactionDTO();
+    var positiveTransactionDTO = buildTransactionDTO(4, AMOUNT);
     doReturn(of(account)).when(accountService).findOptional(ACCOUNT_UUID);
     doReturn(positiveTransaction).when(transactionRepository).save(any(Transaction.class));
 
@@ -180,12 +165,15 @@ public class TransactionServiceTest {
         () -> assertThat(actualTransactionDTO.getEventDate(), is(notNullValue())));
   }
 
-  private TransactionDTO buildInCashTransactionDTO() {
-    return buildTransactionDTO(1, AMOUNT);
-  }
-
-  private TransactionDTO buildPaymentTransactionDTO() {
-    return buildTransactionDTO(4, AMOUNT);
+  private Transaction buildTransaction(
+      final OperationTypesEnumeration operationTypesEnumeration, final BigDecimal amount) {
+    return Transaction.builder()
+        .uuid(TRANSACTION_UUID)
+        .operationType(operationTypesEnumeration)
+        .account(account)
+        .eventDate(EVENT_DATE)
+        .amount(amount)
+        .build();
   }
 
   private TransactionDTO buildTransactionDTO(final Integer operationType, final BigDecimal amount) {
