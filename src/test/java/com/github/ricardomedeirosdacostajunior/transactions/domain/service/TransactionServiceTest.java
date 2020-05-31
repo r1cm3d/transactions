@@ -96,8 +96,7 @@ public class TransactionServiceTest {
   @Test
   public void createWithNegativeValue() {
     var negativeTransactionDTO = buildTransactionDTO(1, AMOUNT.negate());
-    doReturn(of(account)).when(accountService).findOptional(ACCOUNT_UUID);
-    doReturn(negativeTransaction).when(transactionRepository).save(any(Transaction.class));
+    mockForCreate(negativeTransaction);
 
     var actualTransactionDTO = transactionService.create(negativeTransactionDTO);
 
@@ -132,8 +131,7 @@ public class TransactionServiceTest {
   @Test
   public void createWithPositiveValue() {
     var positiveTransactionDTO = buildTransactionDTO(4, AMOUNT);
-    doReturn(of(account)).when(accountService).findOptional(ACCOUNT_UUID);
-    doReturn(positiveTransaction).when(transactionRepository).save(any(Transaction.class));
+    mockForCreate(positiveTransaction);
 
     var actualTransactionDTO = transactionService.create(positiveTransactionDTO);
 
@@ -163,6 +161,11 @@ public class TransactionServiceTest {
                 actualTransactionDTO.getOperationType(),
                 is(equalTo(expectedPositiveTransactionDTO.getOperationType()))),
         () -> assertThat(actualTransactionDTO.getEventDate(), is(notNullValue())));
+  }
+
+  private void mockForCreate(final Transaction transaction) {
+    doReturn(of(account)).when(accountService).findOptional(ACCOUNT_UUID);
+    doReturn(transaction).when(transactionRepository).save(any(Transaction.class));
   }
 
   private Transaction buildTransaction(
