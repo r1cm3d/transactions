@@ -13,6 +13,7 @@ public class AccountDTO {
 
   @JsonProperty("document_number")
   String documentNumber;
+
   @JsonProperty("id")
   UUID uuid;
 }

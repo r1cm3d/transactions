@@ -19,8 +19,7 @@ public class AccountDTOTest {
 
     assertAll(
         () -> assertThat(jsonPropertyAnnotation, is(notNullValue())),
-        () ->
-            assertThat(jsonPropertyAnnotation.value(), is(equalTo("document_number"))));
+        () -> assertThat(jsonPropertyAnnotation.value(), is(equalTo("document_number"))));
   }
 
   @Test
@@ -29,8 +28,7 @@ public class AccountDTOTest {
 
     assertAll(
         () -> assertThat(jsonPropertyAnnotation, is(notNullValue())),
-        () ->
-            assertThat(jsonPropertyAnnotation.value(), is(equalTo("id"))));
+        () -> assertThat(jsonPropertyAnnotation.value(), is(equalTo("id"))));
   }
 
   private Field getField(final String name) {

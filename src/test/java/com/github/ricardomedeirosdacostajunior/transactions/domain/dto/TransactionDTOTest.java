@@ -19,8 +19,7 @@ public class TransactionDTOTest {
 
     assertAll(
         () -> assertThat(jsonPropertyAnnotation, is(notNullValue())),
-        () ->
-            assertThat(jsonPropertyAnnotation.value(), is(equalTo("id"))));
+        () -> assertThat(jsonPropertyAnnotation.value(), is(equalTo("id"))));
   }
 
   @Test
@@ -29,8 +28,7 @@ public class TransactionDTOTest {
 
     assertAll(
         () -> assertThat(jsonPropertyAnnotation, is(notNullValue())),
-        () ->
-            assertThat(jsonPropertyAnnotation.value(), is(equalTo("account_id"))));
+        () -> assertThat(jsonPropertyAnnotation.value(), is(equalTo("account_id"))));
   }
 
   @Test
@@ -39,8 +37,7 @@ public class TransactionDTOTest {
 
     assertAll(
         () -> assertThat(jsonPropertyAnnotation, is(notNullValue())),
-        () ->
-            assertThat(jsonPropertyAnnotation.value(), is(equalTo("operation_type"))));
+        () -> assertThat(jsonPropertyAnnotation.value(), is(equalTo("operation_type"))));
   }
 
   @Test
@@ -49,8 +46,7 @@ public class TransactionDTOTest {
 
     assertAll(
         () -> assertThat(jsonPropertyAnnotation, is(notNullValue())),
-        () ->
-            assertThat(jsonPropertyAnnotation.value(), is(equalTo("event_date"))));
+        () -> assertThat(jsonPropertyAnnotation.value(), is(equalTo("event_date"))));
   }
 
   private Field getField(final String name) {
