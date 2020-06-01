@@ -1,6 +1,6 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.exception;
 
-public class InvalidOperationTypeException extends RuntimeException {
+public final class InvalidOperationTypeException extends ClientErrorException {
 
   public InvalidOperationTypeException() {
     super("Operation type is invalid");

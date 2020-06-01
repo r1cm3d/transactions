@@ -1,6 +1,6 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.exception;
 
-public class InvalidAccountException extends RuntimeException {
+public final class InvalidAccountException extends ClientErrorException {
 
   public InvalidAccountException() {
     super("Account invalid or not found");
