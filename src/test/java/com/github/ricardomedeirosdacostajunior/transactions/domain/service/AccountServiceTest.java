@@ -9,12 +9,14 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Account;
+import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidAccountException;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.AccountRepository;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +34,8 @@ public class AccountServiceTest {
 
   private static final String DOCUMENT_NUMBER = "12345678900";
   private static final String aUUID = "3554cc7e-ae24-4ab7-b52d-fbfd53644bfe";
-  private static final UUID requestUUID = fromString(aUUID);
+  private static final String ACCOUNT_NOT_FOUND_MESSAGE = "Account invalid or not found";
+  private static final UUID REQUEST_UUID = fromString(aUUID);
 
   @InjectMocks private AccountService accountService;
 
@@ -70,12 +73,24 @@ public class AccountServiceTest {
   }
 
   @Test
+  public void createMustThrowInvalidAccountExceptionWhenDocumentNumberIsInvalid() {
+    var accountDTOWithInvalidAccount = AccountDTO.builder().build();
+
+    var invalidAccountException =
+        assertThrows(
+            InvalidAccountException.class,
+            () -> accountService.create(accountDTOWithInvalidAccount));
+
+    assertThat(invalidAccountException.getMessage(), is(equalTo(ACCOUNT_NOT_FOUND_MESSAGE)));
+  }
+
+  @Test
   public void find() {
-    doReturn(of(account)).when(accountRepository).findById(requestUUID);
+    doReturn(of(account)).when(accountRepository).findById(REQUEST_UUID);
 
-    var actualAccountDTO = accountService.find(requestUUID);
+    var actualAccountDTO = accountService.find(REQUEST_UUID);
 
-    verify(accountRepository).findById(requestUUID);
+    verify(accountRepository).findById(REQUEST_UUID);
     assertAll(
         () -> assertThat(actualAccountDTO.getUuid(), is(equalTo(fromString(aUUID)))),
         () -> assertThat(actualAccountDTO.getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER))));
@@ -83,11 +98,11 @@ public class AccountServiceTest {
 
   @Test
   public void findWhenThereIsNoAccount() {
-    doReturn(empty()).when(accountRepository).findById(requestUUID);
+    doReturn(empty()).when(accountRepository).findById(REQUEST_UUID);
 
-    var actualAccountDTO = accountService.find(requestUUID);
+    var actualAccountDTO = accountService.find(REQUEST_UUID);
 
-    verify(accountRepository).findById(requestUUID);
+    verify(accountRepository).findById(REQUEST_UUID);
     assertThat(actualAccountDTO, is(nullValue()));
   }
 }

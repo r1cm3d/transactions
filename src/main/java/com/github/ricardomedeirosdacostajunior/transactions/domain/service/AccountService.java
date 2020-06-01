@@ -1,9 +1,11 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.service;
 
+import static java.util.Optional.ofNullable;
 import static java.util.UUID.randomUUID;
 
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Account;
+import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidAccountException;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.AccountRepository;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,8 +34,12 @@ public class AccountService {
   }
 
   private Account dtoToEntity(final AccountDTO accountDTO) {
+    var documentNumber = ofNullable(accountDTO)
+        .map(AccountDTO::getDocumentNumber)
+        .orElseThrow(InvalidAccountException::new);
+
     return Account.builder()
-        .documentNumber(accountDTO.getDocumentNumber())
+        .documentNumber(documentNumber)
         .uuid(randomUUID())
         .build();
   }
