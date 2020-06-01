@@ -22,4 +22,15 @@ public class AccountDTOTest {
         () ->
             assertThat(jsonPropertyAnnotation.value(), is(equalTo("document_number"))));
   }
+
+  @Test
+  public void uuidFieldMustBeAnnotatedWithJsonPropertyAnnotation() {
+    var jsonPropertyAnnotation =
+        getDeclaredField(AccountDTO.class, "uuid").getAnnotation(JsonProperty.class);
+
+    assertAll(
+        () -> assertThat(jsonPropertyAnnotation, is(notNullValue())),
+        () ->
+            assertThat(jsonPropertyAnnotation.value(), is(equalTo("id"))));
+  }
 }
