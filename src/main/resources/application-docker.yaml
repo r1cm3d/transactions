@@ -5,7 +5,7 @@ spring:
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://db:5432/transactions
+    url: jdbc:postgresql://transactions_db:5432/transactions
     username: docker
     password: pass123
   jpa:

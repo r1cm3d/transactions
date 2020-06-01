@@ -1,13 +1,13 @@
 version: '3.6'
 services:
-  db:
+  transactions_db:
     image: postgres
     env_file:
       - db.env
     container_name: transactions_db
     ports:
       - 5432:5432
-  app:
+  transactions_application:
     image: ricardo/transactions
     build:
       context: ./../../../
