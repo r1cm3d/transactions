@@ -20,9 +20,12 @@ build:
 	gradle build && \
 	docker-compose -f scripts/docker-compose/stack/docker-compose.yaml build
 
-run-local:
+run-local-db:
 	@echo "\nRunning Postgres locally container\n"
 	docker-compose -f scripts/docker-compose/postgres/docker-compose.yaml up &
+
+run-local: run-local-db
+	@echo "\nRunning Spring Boot application locally\n"
 	gradle bootRun
 
 run:
