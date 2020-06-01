@@ -1,0 +1,10 @@
+version: '3.6'
+services:
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - db.env
+    container_name: db
+    ports:
+      - 5432:5432
