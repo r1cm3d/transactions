@@ -1,4 +1,6 @@
 spring:
+  flyway:
+    enabled: false
   datasource:
     platform: h2
     driverClassName: org.h2.Driver
