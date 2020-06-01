@@ -2,9 +2,8 @@ version: '3.6'
 services:
   db:
     image: postgres
-    restart: always
     env_file:
       - db.env
-    container_name: db_local
+    container_name: transactions_db_local
     ports:
       - 5432:5432

@@ -2,10 +2,9 @@ version: '3.6'
 services:
   db:
     image: postgres
-    restart: always
     env_file:
       - db.env
-    container_name: db
+    container_name: transactions_db
     ports:
       - 5432:5432
   app:
@@ -13,10 +12,10 @@ services:
     build:
       context: ./../../../
       dockerfile: Dockerfile
-    container_name: "application"
+    container_name: transactions_application
     env_file:
       - app.env
     ports:
       - 8080:8080
     depends_on:
-      - db
+      - transactions_db
