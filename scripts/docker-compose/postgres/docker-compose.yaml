@@ -5,6 +5,6 @@ services:
     restart: always
     env_file:
       - db.env
-    container_name: db
+    container_name: db_local
     ports:
       - 5432:5432
