@@ -1,6 +1,6 @@
 Accounts
-curl -v http://localhost:8080/accounts -d @scripts/json/account.json -H "Content-type: application/json"
 curl -v http://localhost:8080/accounts/cd54fcaa-13b6-4adb-86e5-004d52a753b8 -H "Content-type: application/json"
+NEW_UUID curl -v http://localhost:8080/accounts @scripts/json/account.json -H "Content-type: application/json" | grep -Po '(?<=uuid":")[^"]+'
 curl -v http://localhost:8080/accounts -d @scripts/json/account-error.json -H "Content-type: application/json"
 
 Transactions
