@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Creating a new account";
-FIRST_REQUEST="curl -sX POST http://localhost:8080/accounts -d @scripts/json/account.json -H \"Content-type: application/json\" | grep -Po '(?<=uuid\":\")[^\"]+'";
+FIRST_REQUEST="curl -sX POST http://localhost:8080/accounts -d @scripts/json/account.json -H \"Content-type: application/json\" | grep -Po '(?<=id\":\")[^\"]+'";
 echo "$FIRST_REQUEST";
 NEW_UUID="$(eval $FIRST_REQUEST)";
 echo "Account UUID created"
