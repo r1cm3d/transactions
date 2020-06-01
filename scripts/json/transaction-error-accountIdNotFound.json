@@ -1,5 +1,5 @@
 {
-  "accountUuid": "f2b5aa47-f0e5-4866-9ab1-12b8bd6632d5",
-  "operationType": "1",
+  "account_id": "f2b5aa47-f0e5-4866-9ab1-12b8bd6632d5",
+  "operation_type": "1",
   "amount": 123.45
 }
