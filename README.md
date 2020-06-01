@@ -27,7 +27,7 @@ make && sh scripts/shell/example.sh
 
 ## About The Project
 
-This is a Java Spring Boot RESTFul application built in a Docker container, just for practicing these technologies and some TDD. :smile:
+This is a Java Spring Boot RESTFul application built in a Docker container, just for practicing these technologies and TDD. :smile:
 
 ## Getting Started
 
