@@ -34,14 +34,12 @@ public class AccountService {
   }
 
   private Account dtoToEntity(final AccountDTO accountDTO) {
-    var documentNumber = ofNullable(accountDTO)
-        .map(AccountDTO::getDocumentNumber)
-        .orElseThrow(InvalidAccountException::new);
+    var documentNumber =
+        ofNullable(accountDTO)
+            .map(AccountDTO::getDocumentNumber)
+            .orElseThrow(InvalidAccountException::new);
 
-    return Account.builder()
-        .documentNumber(documentNumber)
-        .uuid(randomUUID())
-        .build();
+    return Account.builder().documentNumber(documentNumber).uuid(randomUUID()).build();
   }
 
   private AccountDTO entityToDto(final Account account) {

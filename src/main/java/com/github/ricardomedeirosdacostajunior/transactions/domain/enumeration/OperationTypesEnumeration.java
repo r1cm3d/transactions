@@ -4,8 +4,6 @@ import static java.util.Arrays.asList;
 import static java.util.Objects.isNull;
 
 import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidOperationTypeException;
-import java.util.Objects;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -20,8 +18,7 @@ public enum OperationTypesEnumeration {
   private Integer value;
 
   public static OperationTypesEnumeration valueOf(final Integer value) {
-    if (isNull(value))
-      throw new InvalidOperationTypeException();
+    if (isNull(value)) throw new InvalidOperationTypeException();
 
     // It seems that spotless plugin does not recognize Java SE12 Enhanced Switch
     // So I kept it in old fashion style.
