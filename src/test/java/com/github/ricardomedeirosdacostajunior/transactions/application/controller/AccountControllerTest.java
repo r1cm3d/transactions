@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import com.github.ricardomedeirosdacostajunior.transactions.application.controller.AccountController;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.service.AccountService;
 import java.lang.reflect.Method;

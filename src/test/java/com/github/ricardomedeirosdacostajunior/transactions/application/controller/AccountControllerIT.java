@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ricardomedeirosdacostajunior.transactions.application.controller.AccountController;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;

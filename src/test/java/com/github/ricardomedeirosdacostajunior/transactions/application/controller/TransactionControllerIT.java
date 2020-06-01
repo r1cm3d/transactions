@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ricardomedeirosdacostajunior.transactions.application.controller.TransactionController;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.TransactionDTO;
 import java.math.BigDecimal;
 import java.util.UUID;
