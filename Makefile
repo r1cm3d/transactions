@@ -6,9 +6,9 @@ clean:
 	@echo "\n\nCleaning with Gradle\n"
 	gradle clean
 	@echo "\n\nRemoving docker images\n"
-	-docker rm -f transactions_db_local || \
-	docker rm -f transactions_db || \
-	docker rm -f transactions_application
+	-docker rm -f transactions_db_local 2>/dev/null || \
+	docker rm -f transactions_db 2>/dev/null  || \
+	docker rm -f transactions_application 2>/dev/null
 
 build-local:
 	@echo "\n\nBuilding Postgres container to run locally\n"
@@ -27,4 +27,4 @@ run-local:
 
 run:
 	@echo "\n\nRunning the full stack (db and application) to run inside the container\n"
-	docker-compose -f scripts/docker-compose/stack/docker-compose.yaml up
+	-docker-compose -f scripts/docker-compose/stack/docker-compose.yaml up
