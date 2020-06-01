@@ -5,7 +5,7 @@
 ![Build](https://img.shields.io/badge/build-passing-green)
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555)](https://www.linkedin.com/in/ricardo-medeiros-da-costa-junior-18773246/)
 # transactions
-TL;DR:
+**TL;DR:**
 ```console
 make && sh scripts/shell/example.sh
 ```
@@ -39,9 +39,9 @@ To run this project locally you must have the technologies as the [prerequisites
 ```sh
 make all-local
 ```
-It will build Postgres and the application docker image and up them.
+It will build Postgres and the application docker image and run them.
 
-#### In "production" environemnt
+#### In "production" environment
 ```sh
 make all
 ```
