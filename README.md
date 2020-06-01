@@ -49,6 +49,7 @@ or just
 ```sh
 make
 ```
+It will build the stack compose, that is, build and run docker container with the Postgres database and the application.
 
 ## Usage
 
