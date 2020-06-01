@@ -11,7 +11,7 @@ services:
   app:
     image: ricardo/transactions
     build:
-      context: ../../docker
+      context: ./../../../
       dockerfile: Dockerfile
     container_name: "application"
     env_file:
