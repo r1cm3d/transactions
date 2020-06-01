@@ -1,4 +1,4 @@
-package com.github.ricardomedeirosdacostajunior.transactions.application;
+package com.github.ricardomedeirosdacostajunior.transactions.application.controller;
 
 import static com.github.ricardomedeirosdacostajunior.transactions.ReflectionHelper.getDeclaredMethod;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import com.github.ricardomedeirosdacostajunior.transactions.application.controller.TransactionController;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.TransactionDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;

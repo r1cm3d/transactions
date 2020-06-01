@@ -1,4 +1,4 @@
-package com.github.ricardomedeirosdacostajunior.transactions.application;
+package com.github.ricardomedeirosdacostajunior.transactions.application.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
