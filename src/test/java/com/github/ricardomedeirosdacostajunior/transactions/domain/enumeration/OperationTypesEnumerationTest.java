@@ -13,11 +13,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidOperationTypeException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class OperationTypesEnumerationTest {
+
+  private static final String OPERATION_TYPE_INVALID_MESSAGE = "Operation type is invalid";
 
   @ParameterizedTest
   @EnumSource(value = OperationTypesEnumeration.class)
@@ -44,7 +47,19 @@ public class OperationTypesEnumerationTest {
             InvalidOperationTypeException.class,
             () -> OperationTypesEnumeration.valueOf(invalidValue));
 
-    assertThat(invalidOperationType.getMessage(), is(equalTo("Operation type is invalid")));
+    assertThat(invalidOperationType.getMessage(), is(equalTo(OPERATION_TYPE_INVALID_MESSAGE)));
+  }
+
+  @Test
+  public void valueOfWithNullValue() {
+    final Integer nullValue = null;
+
+    var invalidOperationType =
+        assertThrows(
+            InvalidOperationTypeException.class,
+            () -> OperationTypesEnumeration.valueOf(nullValue));
+
+    assertThat(invalidOperationType.getMessage(), is(equalTo(OPERATION_TYPE_INVALID_MESSAGE)));
   }
 
   @ParameterizedTest
