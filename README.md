@@ -48,6 +48,7 @@ curl -sX POST http://localhost:8080/transactions -d '{ "account_id": "b0954aa6-9
 * [About the Project](#about-the-project)
 * [Getting Started](#getting-started)
 * [Prerequisites](#prerequisites)
+* [Testing](#testing)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Contact](#contact)
@@ -60,6 +61,22 @@ This is a Java Spring Boot RESTFul application built in a Docker container, just
 ## Getting Started
 
 To run this project locally you must have the technologies as the [prerequisites section](#prerequisites)
+
+### Testing
+#### Unit tests
+```sh
+make unit-test
+```
+
+#### Integration tests
+```sh
+make integration-test
+```
+
+#### All tests
+```sh
+make all-test
+```
 
 ### Installation
 #### In a development environment
