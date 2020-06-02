@@ -2,13 +2,26 @@ all: clean build-production run
 
 all-local: clean build-local run-local
 
-clean:
-	@echo "\nCleaning with Gradle\n"
+format:
+	@echo "\nCleaning with Gradle and formatting the code\n"
 	gradle clean spotlessApply
+
+clean: format
 	@echo "\n\nRemoving docker images\n"
 	-docker rm -f transactions_db_local 2>/dev/null || \
 	docker rm -f transactions_db 2>/dev/null  || \
 	docker rm -f transactions_application 2>/dev/null
+
+unit-test: format
+	@echo "\nRunning unit tests\n"
+	gradle test --tests *Test
+
+integration-test: format
+	@echo "\nRunning integration tests\n"
+	gradle test --tests *IT
+
+all-test: unit-test integration-test
+	@echo "\nRunning all tests\n"
 
 build-local:
 	@echo "\nBuilding Postgres container to run locally\n"
