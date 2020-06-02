@@ -9,6 +9,34 @@
 ```console
 make && sh scripts/shell/example.sh
 ```
+
+<details>
+<summary>
+Sample output
+</summary>
+
+```sh
+>  $ sh scripts/shell/example.sh
+Creating a new account
+curl -sX POST http://localhost:8080/accounts -d @scripts/json/account.json -H "Content-type: application/json" | grep -Po '(?<=id":")[^"]+'
+Account UUID created
+b0954aa6-9381-412b-87a0-4c849a562dbb
+
+Querying this ID b0954aa6-9381-412b-87a0-4c849a562dbb
+curl -sX GET http://localhost:8080/accounts/b0954aa6-9381-412b-87a0-4c849a562dbb
+{"document_number":"06388715907","id":"b0954aa6-9381-412b-87a0-4c849a562dbb"}
+
+Creating account error example
+curl -sX POST http://localhost:8080/accounts -d @scripts/json/account-error.json -H 'Content-type: application/json'
+Account invalid or not found
+
+Creating a new transaction according this account UUID b0954aa6-9381-412b-87a0-4c849a562dbb
+curl -sX POST http://localhost:8080/transactions -d '{ "account_id": "b0954aa6-9381-412b-87a0-4c849a562dbb", "operation_type": "1", "amount": 123.45 }' -H 'Content-type: application/json'
+{"amount":-123.45,"id":"3eb28df5-7b10-4834-b7ca-54b4a50f78f9","account_id":"b0954aa6-9381-412b-87a0-4c849a562dbb","operation_type":1,"event_date":"2020-06-02T13:37:56.769392201"}
+
+```
+</details>
+
 ## Prerequisites
 [![JDK](https://img.shields.io/badge/JDK-14.0.1--zulu-orange)](https://www.azul.com/downloads/zulu-community/?architecture=x86-64-bit&package=jdk)
 [![Gradle](https://img.shields.io/badge/Gradle-6.4.1-brightgreen)](https://gradle.org/install/)
