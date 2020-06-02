@@ -5,7 +5,7 @@
 ![Build](https://img.shields.io/badge/build-passing-green)
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555)](https://www.linkedin.com/in/ricardo-medeiros-da-costa-junior-18773246/)
 # transactions
-TL;DR:
+**TL;DR:**
 ```console
 make && sh scripts/shell/example.sh
 ```
@@ -27,7 +27,7 @@ make && sh scripts/shell/example.sh
 
 ## About The Project
 
-This is a Java Spring Boot RESTFul application built in a Docker container, just for practicing these technologies and some TDD. :smile:
+This is a Java Spring Boot RESTFul application built in a Docker container, just for practicing these technologies and TDD. :smile:
 
 ## Getting Started
 
@@ -39,9 +39,9 @@ To run this project locally you must have the technologies as the [prerequisites
 ```sh
 make all-local
 ```
-It will build Postgres and the application docker image and up them.
+It will build Postgres and the application docker image and run them.
 
-#### In "production" environemnt
+#### In "production" environment
 ```sh
 make all
 ```
@@ -49,12 +49,13 @@ or just
 ```sh
 make
 ```
+It will build the stack compose, that is, build and run docker container with the Postgres database and the application.
 
 ## Usage
 
 * [accounts](documentation/post-accounts.md) : `POST /accounts`
 * [accounts](documentation/get-accounts.md) : `GET /accounts/:id`
-* [transactions](documentation/post-transactions.md) : `transactions /accounts`
+* [transactions](documentation/post-transactions.md) : `POST /transactions`
 
 ## Contact
 
