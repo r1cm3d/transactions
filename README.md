@@ -44,10 +44,10 @@ curl -sX POST http://localhost:8080/transactions -d '{ "account_id": "b0954aa6-9
 [![Docker-compose](https://img.shields.io/badge/Docker--compose-%3E%3D1.21.0-blue)](https://github.com/docker/compose/releases)
 
 ## Table of Contents
-
+* [TL;DR](#transactions)
+* [Prerequisites](#prerequisites)
 * [About the Project](#about-the-project)
 * [Getting Started](#getting-started)
-* [Prerequisites](#prerequisites)
 * [Testing](#testing)
 * [Installation](#installation)
 * [Usage](#usage)
