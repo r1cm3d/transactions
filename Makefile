@@ -1,10 +1,10 @@
-all: clean build run
+all: clean build-production run
 
 all-local: clean build-local run-local
 
 clean:
 	@echo "\nCleaning with Gradle\n"
-	gradle clean
+	gradle clean spotlessApply
 	@echo "\n\nRemoving docker images\n"
 	-docker rm -f transactions_db_local 2>/dev/null || \
 	docker rm -f transactions_db 2>/dev/null  || \
@@ -12,12 +12,12 @@ clean:
 
 build-local:
 	@echo "\nBuilding Postgres container to run locally\n"
-	gradle build && \
+	gradle spotlessApply build && \
     docker-compose -f scripts/docker-compose/postgres/docker-compose.yaml build
 
-build:
+build-production:
 	@echo "\nBuilding stack compose to run the application inside the container\n"
-	gradle build && \
+	gradle spotlessApply build && \
 	docker-compose -f scripts/docker-compose/stack/docker-compose.yaml build
 
 run-local-db:
