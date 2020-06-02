@@ -55,7 +55,7 @@ It will build the stack compose, that is, build and run docker container with th
 
 * [accounts](documentation/post-accounts.md) : `POST /accounts`
 * [accounts](documentation/get-accounts.md) : `GET /accounts/:id`
-* [transactions](documentation/post-transactions.md) : `transactions /accounts`
+* [transactions](documentation/post-transactions.md) : `POST /transactions`
 
 ## Contact
 
