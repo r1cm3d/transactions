@@ -1,5 +1,5 @@
 FROM adoptopenjdk/openjdk14-openj9
-MAINTAINER Ricardo
+LABEL maintainer="Ricardo"
 EXPOSE 8080
 VOLUME /tmp
 ADD build/libs/*jar app.jar
