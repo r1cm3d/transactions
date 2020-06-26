@@ -6,7 +6,9 @@ import static java.util.UUID.randomUUID;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.AccountDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Account;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidAccountException;
+import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidAvailableLimitCreditException;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.AccountRepository;
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -33,13 +35,33 @@ public class AccountService {
     return accountRepository.findById(uuid);
   }
 
+  public void updateAvailableCreditLimit(final BigDecimal transactionValue, final Account account) {
+    var newAccount =
+        Account.builder()
+            .uuid(account.getUuid())
+            .documentNumber(account.getDocumentNumber())
+            .availableCreditLimit(account.getAvailableCreditLimit().subtract(transactionValue))
+            .build();
+
+    accountRepository.save(newAccount);
+  }
+
   private Account dtoToEntity(final AccountDTO accountDTO) {
     var documentNumber =
         ofNullable(accountDTO)
             .map(AccountDTO::getDocumentNumber)
             .orElseThrow(InvalidAccountException::new);
 
-    return Account.builder().documentNumber(documentNumber).uuid(randomUUID()).build();
+    var availableLimitCredit =
+        ofNullable(accountDTO.getAvailableCreditLimit())
+            .orElseThrow(InvalidAvailableLimitCreditException::new);
+
+    return Account.builder()
+        .availableCreditLimit(accountDTO.getAvailableCreditLimit())
+        .documentNumber(documentNumber)
+        .availableCreditLimit(availableLimitCredit)
+        .uuid(randomUUID())
+        .build();
   }
 
   private AccountDTO entityToDto(final Account account) {
