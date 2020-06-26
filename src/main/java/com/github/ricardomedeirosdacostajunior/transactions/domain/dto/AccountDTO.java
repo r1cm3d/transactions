@@ -1,6 +1,7 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,4 +17,7 @@ public class AccountDTO {
 
   @JsonProperty("id")
   UUID uuid;
+
+  @JsonProperty("available_credit_limit")
+  BigDecimal availableCreditLimit;
 }

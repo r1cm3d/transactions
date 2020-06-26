@@ -15,6 +15,8 @@ public class AccountTest {
 
   private static final String DOCUMENT_NUMBER_COLUMN = "document_number";
   private static final String DOCUMENT_NUMBER_ATTRIBUTE = "documentNumber";
+  private static final String AVAILABLE_CREDIT_LIMIT_ATTRIBUTE = "availableCreditLimit";
+  private static final String AVAILABLE_CREDIT_LIMIT_COLUMN = "available_credit_limit";
 
   @Test
   public void accountClassMustBeAnnotatedWithEntityAnnotation() {
@@ -30,5 +32,19 @@ public class AccountTest {
         () -> assertThat(documentNumberColumnAnnotation, is(notNullValue())),
         () ->
             assertThat(documentNumberColumnAnnotation.name(), is(equalTo(DOCUMENT_NUMBER_COLUMN))));
+  }
+
+  @Test
+  public void availableCreditLimitMustBeAnnotatedWithColumnAnnotation() {
+    var availableCreditLimitColumnAnnotation =
+        getDeclaredField(Account.class, AVAILABLE_CREDIT_LIMIT_ATTRIBUTE)
+            .getAnnotation(Column.class);
+
+    assertAll(
+        () -> assertThat(availableCreditLimitColumnAnnotation, is(notNullValue())),
+        () ->
+            assertThat(
+                availableCreditLimitColumnAnnotation.name(),
+                is(equalTo(AVAILABLE_CREDIT_LIMIT_COLUMN))));
   }
 }

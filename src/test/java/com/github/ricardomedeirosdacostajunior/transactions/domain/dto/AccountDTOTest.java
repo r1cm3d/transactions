@@ -31,6 +31,15 @@ public class AccountDTOTest {
         () -> assertThat(jsonPropertyAnnotation.value(), is(equalTo("id"))));
   }
 
+  @Test
+  public void availableCreditLimitFieldMustBeAnnotatedWithJsonPropertyAnnotation() {
+    var jsonPropertyAnnotation = getField("availableCreditLimit").getAnnotation(JsonProperty.class);
+
+    assertAll(
+        () -> assertThat(jsonPropertyAnnotation, is(notNullValue())),
+        () -> assertThat(jsonPropertyAnnotation.value(), is(equalTo("available_credit_limit"))));
+  }
+
   private Field getField(final String name) {
     return getDeclaredField(AccountDTO.class, name);
   }
