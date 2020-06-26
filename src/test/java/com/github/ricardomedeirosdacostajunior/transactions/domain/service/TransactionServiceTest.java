@@ -2,6 +2,7 @@ package com.github.ricardomedeirosdacostajunior.transactions.domain.service;
 
 import static com.github.ricardomedeirosdacostajunior.transactions.domain.enumeration.OperationTypesEnumeration.IN_CASH;
 import static com.github.ricardomedeirosdacostajunior.transactions.domain.enumeration.OperationTypesEnumeration.PAYMENT;
+import static java.math.BigDecimal.TEN;
 import static java.math.BigDecimal.valueOf;
 import static java.time.LocalDateTime.now;
 import static java.util.Optional.empty;
@@ -42,7 +43,10 @@ public class TransactionServiceTest {
   private static final String ACCOUNT_NOT_FOUND_MESSAGE = "Account invalid or not found";
   private static final UUID ACCOUNT_UUID = fromString("8e9b62a7-fac8-47fc-a4b2-8406e23d85b0");
   private static final UUID TRANSACTION_UUID = fromString("35713a38-48d2-4b26-9dc1-751353d174ad");
-  private static final BigDecimal AMOUNT = valueOf(123.45);
+  private static final BigDecimal AMOUNT = TEN;
+  private static final BigDecimal AVAILABLE_LIMIT_CREDIT = valueOf(100);
+  private static final BigDecimal NEW_AVAILABLE_LIMIT_CREDIT_FOR_NEGATIVE = valueOf(90);
+  private static final BigDecimal NEW_AVAILABLE_LIMIT_CREDIT_FOR_POSITIVE = valueOf(110);
   private static final LocalDateTime EVENT_DATE = now();
 
   @InjectMocks private TransactionService transactionService;
@@ -60,7 +64,12 @@ public class TransactionServiceTest {
 
   @BeforeEach
   public void setup() {
-    account = Account.builder().documentNumber("98457968").uuid(ACCOUNT_UUID).build();
+    account =
+        Account.builder()
+            .documentNumber("98457968")
+            .availableCreditLimit(AVAILABLE_LIMIT_CREDIT)
+            .uuid(ACCOUNT_UUID)
+            .build();
     expectedNegativeTransactionDTO = buildTransactionDTO(1, AMOUNT.negate());
     expectedPositiveTransactionDTO = buildTransactionDTO(4, AMOUNT);
     negativeTransaction = buildTransaction(IN_CASH, AMOUNT.negate());
@@ -107,7 +116,11 @@ public class TransactionServiceTest {
     var actualTransactionDTO = transactionService.create(negativeTransactionDTO);
 
     verifyAndAssertForCreate(
-        IN_CASH, AMOUNT.negate(), actualTransactionDTO, expectedNegativeTransactionDTO);
+        IN_CASH,
+        AMOUNT.negate(),
+        actualTransactionDTO,
+        expectedNegativeTransactionDTO,
+        NEW_AVAILABLE_LIMIT_CREDIT_FOR_NEGATIVE);
   }
 
   @Test
@@ -117,14 +130,21 @@ public class TransactionServiceTest {
 
     var actualTransactionDTO = transactionService.create(positiveTransactionDTO);
 
-    verifyAndAssertForCreate(PAYMENT, AMOUNT, actualTransactionDTO, expectedPositiveTransactionDTO);
+    verifyAndAssertForCreate(
+        PAYMENT,
+        AMOUNT,
+        actualTransactionDTO,
+        expectedPositiveTransactionDTO,
+        NEW_AVAILABLE_LIMIT_CREDIT_FOR_POSITIVE);
   }
 
   private void verifyAndAssertForCreate(
       final OperationTypesEnumeration operationTypesEnumeration,
       final BigDecimal amount,
       final TransactionDTO actualTransactionDTO,
-      final TransactionDTO expectedTransactionDTO) {
+      final TransactionDTO expectedTransactionDTO,
+      final BigDecimal expectedAvailableLimitCredit) {
+    verify(accountService).updateAvailableCreditLimit(expectedAvailableLimitCredit, account);
     verify(transactionRepository).save(transactionArgumentCaptor.capture());
     var transactionCaptured = transactionArgumentCaptor.getValue();
     assertAll(

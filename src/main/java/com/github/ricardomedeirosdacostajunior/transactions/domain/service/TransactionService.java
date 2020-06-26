@@ -1,12 +1,14 @@
 package com.github.ricardomedeirosdacostajunior.transactions.domain.service;
 
 import static com.github.ricardomedeirosdacostajunior.transactions.domain.enumeration.OperationTypesEnumeration.valueOf;
+import static java.math.BigDecimal.ZERO;
 import static java.time.LocalDateTime.now;
 import static java.util.UUID.randomUUID;
 
 import com.github.ricardomedeirosdacostajunior.transactions.domain.dto.TransactionDTO;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.entity.Transaction;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.enumeration.OperationTypesEnumeration;
+import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InsufficientAvailableCreditLimitException;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.exception.InvalidAccountException;
 import com.github.ricardomedeirosdacostajunior.transactions.domain.repository.TransactionRepository;
 import java.math.BigDecimal;
@@ -32,6 +34,10 @@ public class TransactionService {
             .orElseThrow(InvalidAccountException::new);
     var operationType = valueOf(transactionDTO.getOperationType());
     var amount = getAmountAccordingOperationType(operationType, transactionDTO.getAmount());
+    var newAvailableCreditLimit =
+        getNewAvailableCreditLimit(account.getAvailableCreditLimit(), amount);
+
+    accountService.updateAvailableCreditLimit(newAvailableCreditLimit, account);
 
     return Transaction.builder()
         .uuid(randomUUID())
@@ -40,6 +46,16 @@ public class TransactionService {
         .operationType(operationType)
         .amount(amount)
         .build();
+  }
+
+  private BigDecimal getNewAvailableCreditLimit(
+      final BigDecimal oldAvailableCreditLimit, final BigDecimal transactionAmount) {
+    var newAvailableCreditLimit = oldAvailableCreditLimit.add(transactionAmount);
+
+    if (newAvailableCreditLimit.compareTo(ZERO) <= 0)
+      throw new InsufficientAvailableCreditLimitException();
+
+    return newAvailableCreditLimit;
   }
 
   private BigDecimal getAmountAccordingOperationType(
