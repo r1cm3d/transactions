@@ -1,6 +1,7 @@
 package com.github.ricardomedeirosdacostajunior.transactions.application.controller;
 
 import static java.lang.String.format;
+import static java.math.BigDecimal.TEN;
 import static java.util.UUID.fromString;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -33,7 +34,8 @@ public class AccountControllerIT {
 
   @Test
   public void create() throws Exception {
-    var requestAccountDTO = AccountDTO.builder().documentNumber(DOCUMENT_NUMBER).build();
+    var requestAccountDTO =
+        AccountDTO.builder().availableCreditLimit(TEN).documentNumber(DOCUMENT_NUMBER).build();
 
     mockMvc
         .perform(
